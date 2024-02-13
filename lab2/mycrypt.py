@@ -11,6 +11,9 @@ def encode(s):
 
     if len(s) > 1000:
         raise ValueError
+    else:
+        # here we add padding to the string to make it 1000 characters long
+        s += "a" * (1000 - len(s))
 
     for c in s:
         if c in invalid_characters:
@@ -27,7 +30,9 @@ def encode(s):
             # in this case, the character is not allowed
             raise ValueError
 
-    return crypted
+    origlen_crypted = crypted[:origlen]
+
+    return origlen_crypted
 
 
 def decode(s):
