@@ -36,9 +36,6 @@ def encode(s):
 
 
 def decode(s):
-    if not isinstance(s, str):
-        raise TypeError
-    origlen = len(s)
     decrypted = ""
     digitmapping = dict(zip('1234567890!"#€%&/()=', '!"#€%&/()=1234567890'))
     for c in s:

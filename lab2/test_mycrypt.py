@@ -25,27 +25,34 @@ import mycrypt
 ])
 def test_encode(test_input, expected):
     '''Verify that strings given above match the expected results'''
-    assert(mycrypt.encode(test_input)) == expected
+    assert (mycrypt.encode(test_input)) == expected
 
 
 @pytest.mark.parametrize("test_input", [
-    '123', '!"#','abc'])
+    '123', '!"#', 'abc'])
 def test_encode_decode(test_input):
     '''Verify that decoding an encoded string returns original string'''
-    assert(mycrypt.decode(mycrypt.encode(test_input))) == test_input
+    assert (mycrypt.decode(mycrypt.encode(test_input))) == test_input
 
 
-@pytest.mark.parametrize("invalid_input", ['+','åäö'])
+@pytest.mark.parametrize("invalid_input", ['+', 'åäö'])
 def test_invalid_char(invalid_input):
     '''Invalid characters should result in ValueError'''
     with pytest.raises(ValueError):
         mycrypt.encode(invalid_input)
 
 
-@pytest.mark.parametrize("invalid_input", [])
+@pytest.mark.parametrize("invalid_input", [1, 1.1, True, None, [1, 2, 3], (1, 2), ("1", "4")])
 def test_invalid_types(invalid_input):
     '''Invalid parameter types should raise TypeError'''
     with pytest.raises(TypeError):
+        mycrypt.encode(invalid_input)
+
+
+@pytest.mark.parametrize("invalid_input", ["a" * 1001])
+def test_too_long(invalid_input):
+    '''Strings longer than 1000 characters should raise ValueError'''
+    with pytest.raises(ValueError):
         mycrypt.encode(invalid_input)
 
 
